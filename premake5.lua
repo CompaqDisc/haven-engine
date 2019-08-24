@@ -8,7 +8,7 @@ project "Haven"
 	targetdir "bin/%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}/%{prj.name}"
 	objdir  "build/%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}/%{prj.name}"
 
-	files { "src/%{prj.name}/**.cc", "src/%{prj.name}/**.h" }
+	files { "%{prj.name}/src/**.cc", "%{prj.name}/src/**.h" }
 
 	filter "configurations:Debug"
 		defines { "DEBUG" }
@@ -24,8 +24,8 @@ project "Sandbox"
 	targetdir "bin/%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}/%{prj.name}"
 	objdir  "build/%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}/%{prj.name}"
 
-	files { "src/%{prj.name}/**.cc", "src/%{prj.name}/**.h" }
-	includedirs { "src/Haven" }
+	files { "%{prj.name}/src/**.cc", "%{prj.name}/src/**.h" }
+	includedirs { "Haven/src" }
 	links { "Haven" }
 
 	filter "configurations:Debug"
