@@ -9,14 +9,24 @@ project "Haven"
 	objdir  "build/%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}/%{prj.name}"
 
 	files { "%{prj.name}/src/**.cc", "%{prj.name}/src/**.h" }
+	includedirs { "%{prj.name}/src/"}
+	includedirs { "vendor/spdlog/include" }
+
+	cppdialect "C++14"
 
 	filter "configurations:Debug"
-		defines { "DEBUG" }
+		defines { "DEBUG", "HAVEN_DEBUG" }
 		symbols "On"
 
 	filter "configurations:Release"
 		defines { "NDEBUG" }
 		optimize "On"
+
+	filter "system:windows"
+		defines { "HV_PLATFORM_WINDOWS", "HV_BUILD_DLL" }
+
+	filter "system:linux"
+		defines { "HV_PLATFORM_LINUX" }
 
 project "Sandbox"
 	kind "ConsoleApp"
@@ -25,8 +35,12 @@ project "Sandbox"
 	objdir  "build/%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}/%{prj.name}"
 
 	files { "%{prj.name}/src/**.cc", "%{prj.name}/src/**.h" }
-	includedirs { "Haven/src" }
+	includedirs { "Haven/src/"}
+	includedirs { "vendor/spdlog/include" }
+	defines { "HV_CLIENT" }
 	links { "Haven" }
+
+	cppdialect "C++14"
 
 	filter "configurations:Debug"
 		defines { "DEBUG" }
@@ -35,3 +49,9 @@ project "Sandbox"
 	filter "configurations:Release"
 		defines { "NDEBUG" }
 		optimize "On"
+
+	filter "system:windows"
+		defines { "HV_PLATFORM_WINDOWS" }
+
+	filter "system:linux"
+		defines { "HV_PLATFORM_LINUX" }
